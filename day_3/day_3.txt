@@ -1,0 +1,160 @@
+
+gdb is powerful debugging tool used for c and cpp programming languages 
+its free software and works with linux and unix OS
+
+gdb allows the user to stop the program execution in middle and also allows to user to prob[checking] during an application crash
+
+gdb operates on executables files genorated by compiler
+
+gdb never works with .c file
+
+command to compile for gdb 
+gcc -o main main.c -g
+
+to run gdb 
+gdb ./main
+
+when we compile the c program with -g option a symbol table info is added to the executable file
+
+and that info is useful for debugging
+
+gdb uses commands for debugging
+
+to exit gdb press q and then enter
+
+commands for gdb 
+
+1 -> break or b
+2 -> run or r
+3 -> next or n
+4 -> step or s
+5 -> list or l
+6 -> print or p
+7 -> info locals
+8 -> q for quit
+
+
+break point : 
+we need to stop prog. execution in middle for that we use break points
+to apply break point we use command called break or b with either function name or break line number where the prog. pause or stop the execution
+
+most of time we apply break point at main function because we dont know where the problem occurs after that use gdb "run" command
+
+the step command will take to the next line 
+
+but there is some diffrence here
+
+step command will step into function calls
+next command will execute and comes out from function call
+
+list command is going to list[print] the entire command
+
+print command print the values of the variables
+
+info local will provides the local variable info. 
+
+
+command to silently run the gdb 
+gdb --quiet ./main
+
+print x will print value of x
+print &x will print address of x
+
+
+p/x x  -> decimal to hex
+p/t x  -> decimal to binary
+p/o x  -> decimal to octal
+
+
+gdb is powerful tool that can directly jump to any perticular memory location by using x command
+x/d &x
+^
+x is memory command jumping to thr address (&x) and asseccing enitre memory over that address
+
+
+to see the data type of variable type command 
+ptype
+
+
+x/s shows string at perticular location in memory
+x/c shows character at perticular location in memory
+
+set command will change the data of buffer[char. array or other arr]
+
+
+provides input to the program while execution
+two method are there:
+1 -> scanf 
+2 -> argc & argv
+
+two ways to store string data :
+
+1 -> char ch[] = "linux";
+2 -> char* ch = "linux";
+
++===================+
++	kernal	    +
++===================+
++	STACK       + // store local variables and return addresses
++===================+
++                   +
++===================+
++	HEAP        + // stores run time varibales
++===================+
++	.bss        + // stores uninitialized data
++===================+
++	.data       + // stores initialized data
++===================+
++	.text       + // stores program
++===================+
+
+
+after compilation the a.out file divided into diffrent section in memory
+all the statments/function are converted into instruction and instruction is stored into .text section
+
+data section contains initialized global and static variables 
+
+bss[block started by symbol] section contains uninitialized global and static variables and bydefault value of the variable is zero
+
+heap segment contains dma variables
+
+stack store local variables and return addresses
+
+
+size command : 
+it shows allocated memory section 
+
+1 -> size main  -> main is executable file name 
+2 -> nm main  -> main is executable file name 
+
+
+// data section
++-------------------+
++		    +
++-------------------+
++		    +
++-------------------+
++       ro data     + // ro data -> read only data
++-------------------+
+
+
+
+
+
+ex.: 
+char* ch = "linux"; // the sring "linux" is stored into ro data section
+
+command line arguments: 
+parameters that are passed to program during execution from command line interface [cli]
+
+
+
+passing cli arguments with gdb : 
+
+1 -> gdb --args ./code3 keyur panchal from eic
+2 -> gdb ./code3
+     (gdb) r keyur panchal from eic -> here r maens run
+
+
+
+

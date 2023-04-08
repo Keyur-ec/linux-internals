@@ -1,0 +1,15 @@
+        -:    0:Source:main.c
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:1
+        -:    1:#include<stdio.h>
+        -:    2:
+    #####:    3:void greet(char* name){
+    #####:    4:	printf("hello, %s\n", name);
+    #####:    5:	return;
+        -:    6:}
+        -:    7:
+        1:    8:int main(int argc, int** argv){
+        1:    9:	printf("hello from linux!\n");
+        1:   10:	return 0;
+        -:   11:}

@@ -1,0 +1,81 @@
+to gto the synchronize access to the shared memory between client and server semaphores are used
+
+
+shesd resources cant be access by 2 process or thresds at same time. it has to be sync by semaphores
+
+
+
+< process job/role on semaphore >
+
+1. process / thraed -> decrement semaphore lock by 1 and takes the lock
+2. process used shared resources (ex. shread memory, global variable, global data stuecture, printer)
+3. procees / thread -> increment semaphore by 1 and give back lock to semaphore
+
+
+
+server
+1. create shared memory of 250 bytes
+2. create semaphore
+3. server wants to read the shread memory
+4. semaphore value must be = 0 
+5. server should also perform decrement on semaphore
+
+client
+1. client use shared memory
+2. client use samaphore vreated by server
+3. client then writes data to shread memory
+4. relese the semaphore lock
+
+
+
+int semget(key_t key, no. of semaphore, int flags)
+-> on success returns samid, on failure returns -1
+
+semget(semid, semaphore number, cmd, value)
+
+semop() can perform increment or decrement operation on semaphore lockes
+semop(semid, srtuct sem_buf* ptr, no. of semaphores)
+
+
+struct sem_buf{
+	sem_num
+	sem_op
+	sem_flg
+}
+
+
+< side effect of concurrent application (multi tasking at same time) >
+when two proccess or threads try to access same global shared resource leads to race condition
+
+< critical section >
+-> set of instruction or code that is dealing with accesing of global shared resource 
+-> global shared resource can be simple or global variable can be a memory orcan be a datastrcture or resource like printer
+-> to avoid race condition over the critical section syncronization techniques are implimented
+
+< types of synchronization techniques >
+1. semaphore
+2. spin lock
+3. mutex
+
+
+< semaphore >
+1. semaphores are optimised for non contension techniques
+2. cant not be used with interrupt context or interrupt handelers
+3. no issue of process priorities
+
+
+< pthread semaphore >
+1. declare or create a semaphore object/variables 
+	sem_t mysem -> sem_t is a data type to declare semaphore variable
+
+2. to initialize semaphore object/variables
+	sem_init(&mysem, 0, 1) 
+		[last argument meaning: initialize semaphore object with 1] 
+		[second argument: value is non zero semaphore object are shared by process, if it is zero then all 
+		thread of process can access semaphore variable]
+		
+3. appliying lock
+	sem_wait(&mysem)
+
+4. realeasing lock
+	sem_post(&mysem)

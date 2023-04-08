@@ -1,0 +1,64 @@
+validate read request
+
+read system call
+read(int ptr, void* ptr, size_t number_of_bytes);
+
+most of timem read system call returns less number of bytes then acctualy we made request for
+
+file is having only 60 bytes of data but in read system call request 100 bytes of data then read system call return 60 bytes of data
+
+file is open for write only flag but we are making read system call request
+
+the second argument pointer in read call pointing to an address that is outside program memory sagment
+
+
+
+write system call
+write(int ptr, void* ptr, size_t number_of_bytes);
+
+validate the write request
+
+validate the write request for when disk space is filling up make the request accordingly
+
+
+special flags : 
+only below must be use with oring operator
+append()
+create()
+nonblock()
+trunc()
+
+
+
+file offset value:
+
+every open file is accociate with current file offset value
+
+which is non negative integer
+
+is a count or mesurment that mesures from the beginig of the file
+
+generally read and write operation begins at current file offset opsition
+
+by default current file offest to 0 initially [except in case of append]
+
+current file offset cuses to be increased by numer of bytes succesfully read from file or write to file
+
+
+lseek system call : 
+off_t = lseek(int fd, off_t number_of_offset_bytes, int whence);
+
+lseek operation is used for repositioning of the current file offset
+inrerpritation of lseek operation depends on 3rd argument called as int whence argument
+
+3rd argument in lseek system call have 3 macro listed below : 
+
+SEEK_SET // value of 2nd argument is only 0 or grater than that
+SEEK_CUR // value of 2nd argument is positive or negative as well
+SEEK_END //  value of 2nd argument is positive or negative as well
+
+
+
+
+
+

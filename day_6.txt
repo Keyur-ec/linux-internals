@@ -1,0 +1,177 @@
+types of kernal 
+1. monolithic kernal
+2. microlithic kernal
+
+Process managment, memory managment, file system, network, device driver this all services are built into single pakage, single address location that is monolithic kernal [os size is large, debugging is difficault, os design is simple, if one service correpted then entire os is crash, maintanance uses more resources, execution speed is faster] [ex. unix, windows, linux] 
+
+process managment, memory managment, file system, network, device driver is build out side the core that have separate addresses that is microlithic kernal [os size is less, debugging is simple, os design is complex, if one service correpted then it will not effect working of kernal, maintanance uses less resources, execution speed is low] [ex. mac os, symbion, QNX]
+
+
+why we need file system?
+in case of microcontroller they do not have any file system so that we make a program to handel that case
+
+in case of pendrive they have file system so we not need to write code we can access data directly 
+
+in linux os it supports 50+ file system 
+
+to check linux supported file system type below command in terminal
+ls /lib/modules/5.19.0-35-generic/kernel/fs/
+
+
+
+linux file system : 
+root file system is the start point 
+
+root file system is a service that manipulates the memory uses memory more efficiently in order to orgenize files directories in propper structure manner in memory
+
+is a service where all other file system services is atteched during kerbal bootup time
+
+is laid out as hierarchcial tree structure  format
+
+					      root
+						|
+	---------------------------------------------------------------------------------
+	|	|	|	|	|	|	|	|	|	|	|
+	bin	|	tmp	|	lib	|	usr	etc	|	proc	|
+		sbin		home		media	|		dev		sys
+							|
+						-----------------
+						|	|	|
+						lib	bin	include
+						
+
+bin -> have lower level system utilities [] that contains software utilites that talk with hardware
+
+sbin -> contains super system services used by system admiministrator
+
+lib -> lots of lib function user for low level services
+ex. kernal bootup time librarys are use from from this folder
+
+medai -> media folder called as extended root partition
+
+usr > lib -> lots of library function used for high level application [ex. printf(), scanf()]
+usr > bin -> high level services / application
+usr > include -> user header files
+
+etc -> contains all linux configuration information
+
+dev -> all linux device file are in dev folder
+
+proc -> is a logical file system created during kernal bootup time. proc file system is available since beginig of linux os. proc file system creates lots of kernal data structure shown as files to the user
+
+to see cpu information use below command 
+/proc
+vim cpuinfo
+
+to see memory information use below command 
+/proc
+vim meminfo
+
+to see current interrupt status use below command
+/proc
+vim interrupts
+ 
+to see current files that are in use below command
+/proc
+vim filesystems
+
+to see device driver use below command
+/proc
+vim devices
+						
+
+sys -> provide complite info about hardware
+						
+
+
+
+basic I/O calls [universal I/O calls]
+operates on all file [here file may be in virtual memory or may be in physical memory]
+
+file categorized into classes:
+1. normal files
+2. special files
+3. device files
+
+
+noraml file also has two types 
+1. text file [ex. : .txt, .c, .s, .docx]
+2. binary file [ex. : .o, .mpeg, .jpeg]
+
+
+special files [ex. : pipes, FIFO]
+
+
+device files 
+1. chracter device file
+2. block device file
+
+
+ttys [here s means serial interface]
+sda [hard disk] here sd means SCSI Disk
+ 
+
+application making use of device files invoke appropriate driver in kernal space and driver on behalf of application interacts with respected device
+
+
+basic I/O calls
+ex.: open(), create(), read(), write(), close() & etc...
+
+open(const char* parameter, int flags, modes_t modes) 
+// 3rd argument is optional 
+// here mode_t is a kernal datatype and internally it is int data type
+// return type is int
+
+// first argument : complite file path with file name
+// second argument : O_RDONLY, O_WRONLY, O_RDWR [special : O_TRUNC, O_APPEND, O_CREATE, O_NONBLOCK]
+// third argument : modes [permission]
+
+#include<fcntl.h>
+
+open(const char* parameter, int flags, modes_t modes);
+
+ex :
+int x = open("myfolder/myfile.txt", O_RDONLY, 0666);
+
+here x means file discripter
+
+file discripter[fd] : 
+fd = 0 for std input device KB device file
+fd = 1 for std output display/console device file
+fd = 2 for std error device
+
+
+typeds of blocks
+1. boot block
+2. super block
+3. inode block
+4. data block
+
+super block stores statistic information like no. of files, no. of directoris, no. of file system
+
+fd table stores 0 to 1023 value it means we can open maximux 1024 files in linux 
+
+
+all open file in linux os are refferd by a non negative intiger number called as file discripters
+fd is index of the fd table
+to maintain an opend file kernal has to create multiple sructres [inode struct, fd table struct, file object struct] 
+
+
+
+system calls also called as API [application programming interface]
+
+open() when succes retrun fd
+open() when fails return -1
+
+
+create(const char* pathname, mode_t mode); // return -1 if fail to create & fd if success
+close(int fd); // return -1 fail to close & 0 if success
+
+fd is used in all subsquent file oprerations ex. : read(), write(), close();
+
+
+read(int fd, char* ptr, size_t nbytes);
+write(int fd, char* ptr, size_t nbytes);
+
+read() system call is use when read data sequntially from file
+write() system call is use when write data sequntially to file

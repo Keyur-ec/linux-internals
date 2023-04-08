@@ -1,0 +1,119 @@
+uname -r // gives kernal version
+uname -a // gives ubuntu version
+
+steps to compile c code : 
+
+preprocessing
+compilation
+assembler
+linker
+
+preprocessing
+gcc -E rm_duplicate_from_arr.c -o output.i // -E invokes the preprocess gives .i file
+file output.i 
+
+compilation
+gcc -S output.i -o output.s // -S invokes the compiler
+file output.i
+
+assembler
+gcc -C output.s -o output.o // -C invokes the assembler
+
+linker [there are two types dynamic and static linker]
+
+dynamic linker will generates dynemic executable file
+static linker will generates static executable file
+
+dynemic linking 
+gcc output.c -o output.out
+
+static linking
+gcc -static output.c -o output.out
+
+ls -l -h file_name // here -h gives file size in KB's and MB's
+
+static linker is appending entire c library in the object code of the source
+dynemic linker is apeending only required c library in the object code of the source
+
+ELF (Executable Loadeble File Format)
+
+linux OS understands ELF 64 bit file format compiler will process and the processed code paked in ELF 64 bit file format
+
+
+
+vim is most popular editor used in linux and unix OS
+vim is command oriented editor
+
+it works in two mode : 
+insersion mode
+command mode
+
+in insersion mode whatever you write its displyed on the screen
+
+if we press some related keys vim operating in command mode
+
+:wq (w for saving and q for quiting)
+:q! (quit without saving)
+
+if you open vim without file name then after putting data press esc 
+press :wq file_name
+
+
+// below command operates only in command mode
+
+l -> moved cursor towards to right side
+h -> moved cursor towards to left side
+j -> moved cursor towards to down
+k -> moved cursor towards to up side
+
+o -> new line below cursor and also put into insert mode
+O -> new line above cursor and also put into insert mode
+
+a -> insersion happen after the cursor position
+A -> insersion happen at the end of the line
+
+yy -> copy perticular line
+p -> paste data
+x -> delete data
+u -> undo data
+
+
+source code browsing tool:
+
+cscope tool is to examine symbols [variable name, function, macros]
+once cscope command enterd from terminal will take yout to interactive screen and gives you multiple option to examine your source code
+
+
+use tab key to again goto multiple option 
+
+in change this text string option prees ctrl+d to save
+ctag
+
+
+
+redirecter operator
+./output > test.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,97 @@
+PTHREAD_STACK_MIN has minimum stack size of 16kB
+
+
+<< Memory Management Unit (MMU) >>
+
+linux mmu devided into two parts 
+1. high level mmu
+2. low level mmu
+
+high level mmu is independent of cpu architecture but low level mmu is dependent on cpu h/w architecture
+high level mmu is same irrespective of cpu h/w architecture
+
+low level mmu is based on intel architecure in case of intel cpu
+low level mmu is based on arm architecture in case of arm cpu
+
+low level mmu runs durin kernal bootup time and initialized lots of kernal data structure 
+low level is also responciable for sfhiting cpu into protected mode(logical mode)
+cpu seeing memory as block
+block can be also known as page (which is of type struct page)
+
+
+in linux page max page size is 4kB
+page number + offest = virtual address
+
+
+high level mmu has four algorithum
+1. slab allocator // it allocates continous small size memory // it internally uses kalloc
+2. fragment allocator // it allocates large size memory but not allocate continous in memory // 
+3. page allocator // it allocates memory in terms of page
+4. pool allocator // uses by application of driver, when they need fixed size of block of memory
+
+
+< memory manipulation calls >
+1. memset -> void* memset(addr, value, size);
+-> memset function used to initialize or fill a block of memory with perticular given value for given size
+-> memset jumps to addr starting from that addr till the given size initialized eith given value 
+
+2. bzero -> void* bzero(addr, size) // initialized with zero 
+	
+3. memchr() -> void* memchr(addr, value, size)
+-> memchr function goes to the addr location and scan the addr location for a perticular value for a specified size
+-> once found the matching value returns the addr of matching value
+
+4. memcmp() -> int memcmp(addr1, addr2, size) 
+-> it takes two addr for comarition goes to those addresses and compare data byte by byte on those adresses until it gets non matching character
+
+5. memcpy() -> void* memcpy(destination addr, source addr, size)
+
+6. memmove -> void* memmove(destination addr, source addr, size)
+-> same as memcpy
+-> takes data from source addr and copies to dest. addr for specified size
+-> in some cases src. addr. and dest. addr. might overlap in such cases memmove() provides a garunteed behaviour
+-> uses temp buffer memmov first copy data from src. to temp buffer and from temp buffer data copied to dest.
+-> there is no risk even memory overlaps
+-> memove opration is slow but provides garunteed behaviour
+-> in memecpy no temp buffer is used so that operation is fast but there is no garutee of data in case of overlapping
+-> on success pointer to dest. on failure returns -1
+
+
+
+
+
+< problem with user space and kernal space design >
+
+applications are abstracted from the h/w every time application have to go through kernal driver layer to access the hardware
+
+sloution: 
+to overcum such kind of situations there is a concept called as user space driver
+
+< user space driver >
+-> user space driver means driver still in the kernal space which expose the h/w info. to the application that is it is showing h/w details info. to the application and allows the application to impliment its logic on  h/w
+
+-> to impliment such klind of operation linux os preovides us mmap function
+
+
+< anonymous memory mapping >
+1. mmap()
+2. munmap()
+
+
+mmap() is a posix standard function which maps kernal memory or file memory or device memory region to process address space 
+
+void* mmap(addr, size, protection, flags, fd/-1, file offset)
+
+-> on success returns pointer to   
+-> first argument -> where in the process address space we want to map
+-> second argument -> size we want to map
+-> third argument -> read or write protection
+-> forth argument -> nature of the mapping [MAP_PRIVATE, MAP_SHREAD] 
+	mapped region will be use only by the current process [MAP_PRIVATE]
+	mapped region will be use by the other process [MAP_SHREAD]
+-> fifth argument -> fd it may be of normal file or device file, -1 random kernal memory
+-> sixth argument -> file offset
+
+when we give first argument as 0 we asking the kernal to map file region or device region at free location in process address space that free location is anyware either in data, bss, text, heap, stack
+
+

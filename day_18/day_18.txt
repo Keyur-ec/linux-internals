@@ -1,0 +1,136 @@
+1. in the real tie application implimentation with respect to fifo, 1st step is to check wether fifo is existing
+2. if fifo object exist do ot create a new fifo just open(fifo object) and use
+3. if fifo object do not exist then creat a new fifo object, using mkfifi() and open() then use it
+
+how to checj whether fifo object is existing or not?
+for that use open() system call [if exeist returns fd, if not returns -1] 
+
+
+<< system V(five in roman) IPC standards >>
+1. message queue
+2. shared memory
+3. semaphores
+
+
+issues faced during fifo implimentation is elimineted in  message queue
+open() and read() block mechenisum is eliminated in message queue
+
++----+-----------------------------------------------+----------------------------------------------+
+|    |	fifo (named pipe)			     |	message queue				    |
++----+-----------------------------------------------+----------------------------------------------+
+| 1. |	connection oriented			     |	connection less				    |
++----+-----------------------------------------------+----------------------------------------------+
+| 2. |	unidirectional				     |	bidirectional				    |
++----+-----------------------------------------------+----------------------------------------------+
+| 3. |	uses besic I/O calls open(), read(), write() |	uses separate system calles		    |
++----+-----------------------------------------------+----------------------------------------------+
+| 4. |	stream based data transfer		     |	packet based data transfer		    |
++----+-----------------------------------------------+----------------------------------------------+
+| 5. |	continoues and consistent flow of data	     |	data divided intp small unit called packets |
+|    |						     |	and packets are send over given path in     |
+|    |						     |	network                                     |
++----+-----------------------------------------------+----------------------------------------------+
+
+
+
+< message queue >
+1. message queue is a linked list of messages stored in kernal space
+2. each and every message queue is identify by unique id called as message queue id
+3. messages of the message queue is composed of data and type
+
+each and every message queue the linux kernal maintains a structure called struct msqid_ds that maintains current status of the message queue
+
+struct msqid_ds{
+	permissions
+	number of the messages in message queue
+	number of bytes in message queue
+	pid of last processs that has perform message send operaion
+	pid of last process that has message recived operaion
+	time of last message send
+	time of last message recived
+	current time
+}
+
+
+tool or command to check number of message queue 
+ipcs -q
+
+
+
++----+-----------------------------------------------+----------------------------------------------+
+|    |	sender application			     |	reciver application			    |
++----+-----------------------------------------------+----------------------------------------------+
+| 1. |	sender is going to creat message queue      |	just access message queue created by reader |
++----+-----------------------------------------------+----------------------------------------------+
+| 2. |	send message				     |	read message				    |
++----+-----------------------------------------------+----------------------------------------------+
+
+
+we required #include <sys/msg.h> to create message queue
+and also #include <sys/types.h>
+
+int msgget(key_t key, int msgflags)
+
+on success returns message queue id (msgqid), on failure returns -1
+
+argument 1 
+-> key_t is internally a int data type
+-> linux os requies key which is of type key_t data type so whenever application requesting for resources
+-> key is like a name to the message queue
+-> when process creating new messge queue provides an uniqe key
+
+
+argument 2
+-> IPC_CREAT | 0640 (flag + permission)
+  
+IPC_CREAT flag whith mesget function will check for the given key is message queue is exeisting if itr is not exeisting creat new message queue in the kernal space if exeist then just use the message queue
+
+
+msgsnd() is use to append the message at the end of message queue
+int msgsnd(int msgid, void* ptr, size_t size, int flags)
+on success return 0, on failure return -1
+
+
+msgrcv() is use to recive messages from message queue
+ssize_t msgrcv(int msgid, void* ptr, size_t size, long type, int flag)
+on success return size of data portion, on failure return -1
+
+
+to see message queue
+ipcs -q
+
+to remove message queue there are two ways
+
+1. ipcrm -q msqid
+2. ipcrm -Q key
+
+ex: ipcrm -q 0
+
+
+
+
+in msgrcv()
+
+4th argument: type filed specifies which message to fetch from message queue 
+
+last argument:
+type = 0 will fetch message in first in first out order
+typr > 0 will fetch message with given type value
+
+if the message type fileds are repeted will fetch message with first occurence type 
+
+
+
+NOTE : if we give type argument value as 0 in msgrcv() then we get first message from message queue
+
+
+
+
+
+
+
+
+
+
+
+

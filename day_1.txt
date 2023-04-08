@@ -1,0 +1,47 @@
+uname -r // gives kernal version
+uname -a // gives ubuntu version
+
+what is os?
+
+os is a set of programs that manipulates and intract with the hardware and provide and environment to run verious application programs
+
+hardware : CPU, memory, I/O peripheral, I/O controller
+
+advantages of linux os :
+free, open source, portable any hardware machine, secure, scalable or moduler, epected to run 24/7 without rebooting, takes very short debug time
+
+Lisence:
+GPL : GNU Public Linux
+GNU : G Not Unix
+
+sources to get linux os
+kernal.org
+github.com
+
+linux is internally secured [not required 3rd party antivirus software]
+
+we can increse or decrease the size of linux os
+
+error, mistakes, bug, defects, failures, faults
+
+
+linux booting sequence : 
+Steps : 
+
+Power ON -> CPU executes predefine jump instrction from the CPU register [this is hard coded by manufacturer] -> CPU searches for BIOS code,  
+		jumping memory location on ROM
+
+BIOS [Basic Input Output System] -> to initialize all the onboard controllers[like VGA contoller, Audio/Video controller, USB controller] 
+		-> search for bootloder code from booting device [generally first patition of any device have the bootloader code] 
+		-> once bootloader founds BIOS job is done [linux has GRUB (Grand Unified Bootloder)]
+
+Boot Loader -> it looks for OS in Hard disk and loads OS image into RAM -> once its findes OS image it lists to the user -> now bootloder job is done
+
+Kernel startup -> now kernal OS starts exicuting in RAM -> kernal is a first software program that is loded in the RAM and exicutes until we shutdown machine
+
+linux kernal while exicuting creating lots of kernal data structure for file systems, interrupt managment, for process, for memory, for threades, for devices
+thread create init procees and it starts login program
+
+
+compilation steps of c program
+

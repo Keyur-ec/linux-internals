@@ -1,0 +1,112 @@
+standard fd [file discripter]
+
+fd table contains all opend files infrmation 
+each entry it has base address of a file address and that file object points to inode object
+
+fd value 0, 1, 2 is a standard fd
+0 belongs to standard input device
+1 belongs to standard output/console device
+2 belongs to standard error
+
+when opend first from the program 0, 1, 2 are filled by os and least available fd is given to the user or application
+
+fd are used in basic I/O calls
+
+
+c library functions internally invokes basic IO calls
+
+without using scanf(), gets(), printf(), puts() we use this functionality by using standard fd
+
+objdump will divide your executable file into section and list onto screen
+
+
+redirecting the output: 
+1. redirector operater (>)
+2. dup2() system call
+
+
+int dup(int fd)  
+dup system call is duplicates the file discripter
+
+os will allocate least available fd from the fd table
+
+
+int dup(int fd, int fd2) // first argument is given by system, second argument is given by user
+
+
+from the user space accecing inode object info. present in kernal space
+1. ls -l
+2. stat() & fstat()
+
+
+
+structure stat{
+	parameter 
+	size
+	inode number
+	/uid
+	/gid
+}
+
+each and every file waither an opened file or an existing file will maintain structure called as stat structure and that structure maintains ls -l kind of info. for a file 
+
+the moment stat system call execute goes to first argument and goes to file statistic(stat) strucure fatching a structure of info. from and coping into second argument of the system call
+
+stat("file.txt", &stat)
+is a addresss pointed by pointer supplyed by the user
+
+
+fstat() is also doing the same operation as that of stat() system call but condition is file should be opend
+
+
+
+stat -fc %s file.txt // block size
+ls -i file.txt // inode size
+ls -l file.txt // complete info.
+
+linux os provides an fecality for sharing of opened files among multiple apllication [processes] 
+
+where common inode object is shared among multiple applications
+
+
+
+permistions : 
+it's 3 digit long
+permisions are octal digit number
+
+[note : digits from left to right]
+first digit : owner 
+second digit : user in the same group
+third digit : others
+
+
+permissions is sequence three octal digit number where each octal digit number is taking about permission either by owner or either by user in the same group or by others
+
+
+to create multiple user method is given below :
+by using,
+
+1. user account [GUI]
+2. useradd 
+	
+multiple users to genorate multiple work station
+
+
+ex.: permission 645
+
+		6	4	5
+binary value:  110     100     101
+	       rwx     rwx     rwx
+	       
+	      owner   use in  others
+	      	       same 
+	      	       group
+here : 
+r -> read
+w -> write
+x -> execute
+
+
+fcntl is a system call used to perform veious control operation on opened file
+can be used to change file propertis
+fcntl() system call depends on 2nd argument

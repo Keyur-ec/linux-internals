@@ -1,0 +1,124 @@
+< git and github >
+
+tracking project file step by step over a periode of time
+
+it allows to investigate your project files
+
+generallly it is seved in series of snap shot and allows you to go back in time and allows you to view your project
+
+its all about your project goes from intial project to final stage
+
+it protects against data loss by creating back up for project file
+
+manages complex project structure
+
+source control deals with large projetc and manages them to handle safely
+
+linux it self is a project on a github
+
+
+< git >
+
+git is most populer source control
+
+it has lots of documentation  and lots of support
+
+its a industrial standard source control
+
+
+< github >
+
+its application software allows you to store git reposetory
+
+github provides super space
+
+github allows more people to add your project
+
+
+
+register github username with local git source control
+git config --global user.name "keyur-ec"
+
+and also register your email with local git source control
+git config --global user.email "keyurecprojects@gmail.com"
+
+to check if provided configuration is set or not
+git config --list
+
+
+it stores this credential at local machine at location
+cd /home/keyur158138
+and ls -al
+you will able to .gitconfig
+
+
+"git status" command will give you the current status of the all files
+
+to add that file use 
+git add main.c
+
+============================================================	=====================
+| |-----------------------| |-----------| |--------------| |	| |---------------| |
+| |local working directory| |staged area| |local git repo| |	| |remote git repo| |
+| |-----------------------| |-----------| |--------------| |	| |---------------| |
+============================================================	=====================
+
+
+commite : 
+files from the staging area permenatly moved into git reposetory
+git commit -m "first application" main.c
+
+git push origin main
+
+
+push command takes all contains of local reposetory to remote github server reposetory
+
+
+3 states of file : 
+
+modified // modified / changes all in working directory
+staged   // as work prograss file are in stage area, files are modified, next to commite
+commited // files from staging area are peremently moved to locat git reposetory 
+
+
+local reposetory maintain all the commite history as linkd list structure
+the last commite reposetory can also be referanced by reposetory
+
+				       ---
+	    |-------|			 |
+      |-------|	    |			 |
+|-------|     |     | <------- HEAD	 |
+|	|     |-----|			 |
+|	|-----|				 |---> linked list
+|-------|				 |
+    ^					 |
+    |____ lastly commited		 |
+				       ---    
+    
+    
+    
+    
+    
+    
+<< linux internals >>
+
+we want to perent process to execute one block of code and child process to execute other block of code
+
+
+for that we need two thigs 
+1. return value of fork() system call
+2. use conditional statement
+
+
+
+derefferd function
+in case we want to run function that executes after main program terminates then use atexit() system call
+
+atexit(your_function_name)
+
+
+vfork() : 
+
+vfork() is same as fork() but when we call vfork() system call perent process goes into block state until and unless child procees execution finished 
+
+it means if chiled process waiting for some process to done and that process runs indefinite time then perent process never runs and its in block state

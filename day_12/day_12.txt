@@ -1,0 +1,91 @@
+process terminations
+
+1. main() --> return 0;  [nornmal termination]
+2. exit(0)		 [nornmal termination]
+3. we can send signal and terminates a process   [abnornmal termination]
+4. CTRL + C					 [abnornmal termination]
+
+whenever process terminated kernal sends exit status of terminated process to parent process
+
+     
+     
+if perent process busy in doing other job and failed to fetch exit code of the child process then child process enters to state called as zombie and its called as zombie
+ 
+signals are used to terminates zombie processes
+ 
+ 
+
+if a perent process terminates without waiting for chiled process execution then chiled process called as orphon process in this case init process whos pid = 1 will act like perent of orphon processes
+
+
+
+wait() system call will block or suspend the perent process until the termination of child process
+
+once chiled process terminates perent process resumes
+
+
+
+when child process are in execution perent process block
+
+
+uses of fork() system call
+
+1. fork sys call widely use in implementing concurrent application software
+2. fork sys call are use to impliment terminal applications
+3. fork sys call used to impliment client and server model applications
+
+terminal internally is a shell program
+types of shell :=
+1. bash
+2. ssh
+3. cshell
+
+
+
+implimenting terminal or shell application
+fork() + exes() 
+
+
+exes() system call : 
+the moment process calls exes() system call the current programs memory segment are replaced by a brand new programs memory segment from the hard disk
+
+here no new process or no new pid is generated and the only logic is current program replaced by a new program and also executing the new program
+
+execl("name of path", "ls", "-l", 0)
+	     |          |     |   |
+	     v		v     |   v
+	   path name   1st    |  NULL
+	   	     argument |
+	   	              |
+	   	              v
+	   	         2nd argument
+          
+          
+exec returns value -1 only on failure
+when it failed to load program returns error
+the program terminated from the prorgram that is loades
+
+  _                          
+ | |                         
+ | | _____ _   _ _   _ _ __  
+ | |/ / _ \ | | | | | | '__| 
+ |   <  __/ |_| | |_| | |    
+ |_|\_\___|\__, |\__,_|_|    
+            __/ |            
+           |___/  
+
+  |                                  
+  |  /   _ \  |   |  |   |   __|     
+    <    __/  |   |  |   |  |        
+ _|\_\ \___| \__, | \__,_| _|        
+             ____/                   
+
+
+^___^
+(O O)\__________
+(___)\	        )\/
+     | |-----w  |
+     |_|      |_|
+
+
+

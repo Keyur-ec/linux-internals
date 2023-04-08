@@ -1,0 +1,179 @@
+library : 
+
+library is a group of precompiled objectives
+
+
+need of library : 
+
+in a programming language we may require a block of code to be used againg and again 
+
+in order to avoide re writing the code several times the code is created into a packege and pakage is called library and application is using the library instade of code several times
+
+library is not an executable file
+
+
+library can be used at runtime or also it can be used at compile time
+
+library that are used at run time we called as dynemic library
+library that are used at compile time we called as static library
+
+
+
+<static library>
+
+static library is precompiled object file that contains symbols
+
+this symbols used by ypur program to execute and perform the task
+
+static library used by static linker at compile time
+
+static linker will link precompiled object file of library with the target application object file and generates final executable file
+
+executable file that is ready to load and execute
+static file have extension ".a"
+
+
+
+to compile library 
+gcc -o add -c add.c
+
+to creat library
+ar rcs lib_static.a add.o
+
+ar -> archive
+
+rcs -> 
+	r -> optional in case of first time
+	c -> creat
+	s -> symbol 
+
+to source file 
+gcc -o main -c main.c
+
+to creat final executable
+gcc main.o -o main -L. lib_static.a
+
+static linker linkes static library lib_static with application target object file and creates final executable file
+
+
+
+
+<dynamic library>
+
+dynamic library is a programming concept with special functionality link to your executable during program execution time [run time]
+
+dynemic library also known as shared library
+
+they also known as run time library
+
+so every program can use dynamic librarys in oreder to avoide rewriting code several time
+
+
+working of dynamic librarys
+dynamic library are linked during execution of final executable file 
+but actual linking taking place when the dynamic librarys copied to program memory segmanet in the main memory [ram]
+
+
+standard location of library on file system
+
+/usr/lib	// contains high level library
+/usr/local/lib	// contains high level library
+/lib		// contains low level library
+
+
+we can creat dynamic librarys and strore into non standard locations of file system
+for that we need to use environment variables
+
+
+gcc -c add.c -fpic 
+-> -fpic meaning
+	-> -f [flag] 
+	-> pic [position independent code]
+
+after running above command add.o is called relocatable object file
+
+creating instruction as position independent code [add.c]
+
+if your program1 is executing and reqires dynamic_library.so file then address of library file shold be shown an such way that dynamic_library.so file part of programs main memory when librays appended to executable 
+
+say for example other program is running may require same dynamic library then again library should be shown as a part of programs memory
+
+
+gcc add.o -shared -o lib_dynamic.so
+
+-shared is a flag used to create dynamic library
+.so is a extension of dynamic library
+
+
+compiling source file
+gcc -c main.c -o main.o
+
+
+creating final executable
+gcc main.o -o main -L. lib_dynamic.so // here -L. is linker
+
+type "pwd" command in termial to see current working directory
+
+giving environment path to dynamic library 
+export LD_LIBRARY_PATH=:/home/keyur158138/Desktop/day_9/dynamiclib
+
+
+
+
+<static code analysis>
+is the process of detecting errors and bugs in the program source code before program is being run
+
+analysis done on set of code by using some coding standards
+
+this kind of analysis are helpful to identify loop hole and withesses of program that might be harmful
+
+analysis and examination is done on stationary code there for names as static code analysis
+
+
+
+
+splint : 
+is a static code analisys tool used to identify programming erros and bugs in source code
+
+types of programming erros : 
+
+syntax error
+typedef error
+undeclered variable 
+undeclered function
+
+
+for a programmer its always good to have a error free program before it could be executed
+splint is improving program performance
+
+
+clag is a compiler like gcc
+
+
+gcc is build using c
+clang is bulid using cpp
+
+
+clang is c and cpp compiler compiled by cpp
+clang is making use of low level virtual machine [LLVM]
+
+clang is based on low level virtual machine
+
+lowe level virtual machine contains set of compiler techniques
+
+LLVM is intrenally a library so that is used to build binary machine code and this use for compiler framwork
+
+clang is very fast in terms of when compare with gcc
+clang provides extremly clear dignostics messges and warning
+
+clang -Wall -o main main.c // here -Wall meaning warning all [all warnings]
+
+
+gcc is default compiler for linux os
+
+clang has slightly better performance when compered to gcc but still gcc widely used
+gcc suppots many development environment
+clang supports very few environment
+gcc is legecy compiler used since long time
+
+

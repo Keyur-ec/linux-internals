@@ -1,0 +1,75 @@
+key used by unrelated processes to access message queues created by ohter processes
+
+
+
+reciver side scenario
+
+if the message queue is full sender process wants to send more message queue sender process by default gets block until some space is created in messages queue because of reciver process
+
+we dont want our procees to go in block state for that we use IPC_NOWAIT as a flag [last arg. of msgsnt]
+
+
+
+reciver side scenario
+
+
+we dont want reciver process to block on message queues when message with specified type is not available
+
+for that we use IPC_NOWAIT falg as last argument in msgrcv()
+
+
+
+<< shred memory >>
+
+-> shred memory segment allows two or more processes to access the given region of memory
+
+-> shred memory is a fastest type of ipc communication technique among all
+
+-> no system calls are issued process need not to one memory location to other memory location for data trabnsfer or data recive 
+
+-> instead  a given region of memory is atteched to process memory segments
+
+
+
+shred memory is by default is not syncronized programmer has to impliment syncronized access to the shared memory segment
+
+
+client process shold not read from shared memory segment until server process completes write opertaion this is called syncronization
+
+each and every shared memory segment is associated with the structure called as shmid_ds provides compelete current status of shared memory
+
+struct shmid_ds{
+	permission
+	shared memory segment size
+	last pid of shared memory attech
+	last pid of shared memory dettech
+	last time of shared memory attech
+	last time of shared memory dettech
+	current time
+}
+
+
+command to see sharerd memory in system 
+ipcs -m
+
+system calles for shared memory
+#include <sys/shm.h>
+
+shmget() is used to cerate new memory segemnt
+int shmget(key_t key, size_t size, int flag)
+on success returns shmid, on failure returns -1
+ex. : shmget(55. 250, IPC_CREAT | 640)
+
+arg 1 : shred memory segment
+arg 2 : whrere in process address space we have attech share memory segment [value of this arg is taking as 0]
+arg 3 : SHM_RDONLY [if this arg is 0 then it means read write both]
+
+
+void* shmat(int shmid, addr, flags)
+-> it takes shmid as first argument and atteches specified shared memory segment to the process address space
+-> shared memory is created in physical memory of the ram but shmat function atteches the shared memory to the process addr space and returns virtual address (page + offset) that is understood by process
+-> on success returns shared memory segment atteched to process, on failure returns -1
+
+
+shmdt()
+

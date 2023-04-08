@@ -1,0 +1,46 @@
+mistake : a mistake in program is called error
+
+defect : before the code is send to cilent the code is tested by testing team cheack weather code is metting the requrements if error is detectded by tester that is called as programming defect
+ 
+bug : if defect is accepted by respective development team then its called bug and fixing and providing solution by using debugging 
+
+failure : inability of software to given task [ex. breakdown in os]
+
+fault : arise due to some condition and leads to os failure [ex. page fault]
+
+
+
+
+compiler are of two types : 
+1 -> native compilers
+2 -> cross compilers
+
+native compilers -> compiling and generating executable file for local cpu architecture [ex. intel] 
+
+
+
+requirement : 
+on intel architecture write the program and generate executable file for arm architecture for that cross compiler is needed to be installed on intel architecture
+
+
+arm cross compilation using make file: 
+
+gnueabi -> g[gnu] n[not] u[unix] e[executable] a[application] b[binary] i[interface]
+
+
+
+cross compilation : is a process of generating executable files for other architectures
+
+
+
+
+makefile dependencies
+target may have optonal dependencies
+
+
+sometimes target may depend on other file called as dependent file
+dependencies is an inuput file to create target
+
+
+
+

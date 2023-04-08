@@ -1,0 +1,116 @@
+cd /usr/include   // path for include files
+cd /usr/lib       // path for library
+cd /usr/local/lib // path for local library
+cscope -R // will genorate cscope.out file // cross referance file // used by cscope tool
+
+
+ctag
+ctag is a programing tool and useful for software development process in large application
+used in in linux unix veriant os system and supports many programing languge along with C
+
+ctags * -> creating tag file and tag file shows the names found in source file
+or the hader file
+
+here names means objects/symbol here symbol is varable and function
+
+ctags creating file that shows index of the object
+
+its going to create file that shows complite information about all the objects which are used in the source file and header file
+
+ctags internally uses locaters
+
+advantages : 
+its provide quick accsess across the files
+its provide complite function information name, path name, type of function
+tells perticular name is varible or function
+
+
+
+
+compilation of multiple c source file
+we want to compile multiple files and generate single executable file
+
+gcc -o code1 code1.c add.c
+
+
+
+
+makefile and maketool
+
+writing all the file names for multiple file compilation so much time is spent only in writing gcc commands
+
+to solve replace gcc with makefile and maketool that halpes in compiling multiple file at once
+
+it is deficult to compile the source file which are in diffrent directoris and folders
+
+make and makefile will manages the source files and heders files at one place
+
+
+
+make :
+
+make is programming build development tool used in linux and unix OS in large application software
+
+make tool automatically determines which files needed to be recompile
+
+make tool gets all the information to build programe from a file and the file name is "Makefile"
+
+makefile contains set of command that is similar to terminal commands that uses variable names and target names to create object file
+
+make executes shell commands 
+
+here gcc is shell command and makefile executes that command
+
+makefile is a text file that contains complete procedure for bulding build executable 
+
+source file, header file and main file should be in same folder / directory
+
+
+
+
+steps ->
+
+variable initialization :
+variable must assign with value
+ex : CC = gcc
+
+margin : 
+says where the variable starts from any line first column they have to start from
+
+targets 
+are treated as lables of the make file under the taget we write instructions this instruction is executed by makefile
+
+
+syntex of target
+target name: 
+	write the command to be executed by makefile
+	
+	
+find is a command that finds file name that ends with particular extention
+the command that find the file name that has .c extension
+
+find -name '*.c'
+
+this command is to be given to varible in makefile
+
+after executin SRC = $(shell find -name '*.c') all the files with .c extention are geting stored in SRC
+
+once all .c file is getting found then we use it
+
+gcc $(SRC) -o output  >> here $(SRC) meaning that we are de referancing that variable and getting replaced in that line
+
+
+gcc $(SRC) -I $(INC) -o $(FILENAME) >> here -I means including header file
+
+for comment we use # symbol
+
+
+
+
+
+
+
+
+
+
+

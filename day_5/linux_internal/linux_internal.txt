@@ -1,0 +1,193 @@
+linux system programming
+
+
+32bit cpu has maximum 2^32 = 4GB RAM 
+
+
+linux kernal architecture
+ ___________________________________________
+|user space				    |0
+|					    |
+|     ________		 ________	    |
+|    |app^n 1 |		|app^n 2 |	    |
+|    |________|		|________|	    |
+|					    |
+|					    |
+|___________________________________________|2GB
+|kernal space				    |
+|					    |
+|     ________		 ________	    |
+|    |prog. 1 |		|prog. 2 |	    |
+|    |________|		|________|	    |
+|					    |
+|					    |
+|___________________________________________|4GB
+
+	  [---------RAM---------]
+
+
+application : 
+application is a software that is readyly available for end user
+
+user space contains all the applications and kernal space contains set of programs
+
+kernal is software core that talks with hardware
+
+
+core of the os is called as kernal
+
+kernal is a first program that is loded first into RAM and runs until system shutdown time
+
+kernal os quiet diffrent from hardware
+
+
+layred architecture
+
+------------------------------|
+	application	      |
+------------------------------|
+	  kernal	      |
+------------------------------|
+	 hardware	      |
+------------------------------|
+
+
+whenever application communicate with hardware, application make request to kernal and kernal behalf of application talking to hardware
+
+application never interct directly with hardware
+
+shell is a progarm its act like bridge between user and kernal
+ex. : type "date" command in shell and then kernal ask to hardware timer modeule and give date in shell
+
+
+
+kernal services :
+
+1 -> file system services
+2 -> I/O device services
+3 -> multiprocessing services
+4 -> multithreading services
+5 -> memory mapping & memory allocation services
+6 -> inter process communication servies [IPC]
+7 -> process syncronization
+8 -> process scheduling
+9 -> signal managment
+A -> neteork programming
+B -> drivers
+
+
+ ___________________________________________
+|user space				    |0
+|					    |
+|     ________		 ________	    |
+|    |app^n 1 |		|app^n 2 |	    |
+|    |________|		|________|	    |
+|					    |
+|					    |
+|___________________________________________|2GB
+|kernal space				    |
+|					    |
+|     ___   ____   _____   _____   ______   |
+|    |VFS| |P.M.| | MMU | | IPC | |signal|  |
+|    |___| |T.M.| |_____| |_____| |______|  |
+|	   |____|                           |
+|     _________   ________________	    |	
+|    |scheduler| | syncronization |         |
+|    |_________| |________________|	    |
+|___________________________________________|
+|    			   | WiFi stack     |
+|	Device Driver	   | Ethernet stack |
+|__________________________|________________|4GB
+
+
+VFS -> virtual filesystem
+
+
+kernal file system services : 
+by using kernal file services a programmer can, 
+1. write a program to open an existing file
+2. write a program to create a new file
+3. write a program to read data sequtially from file
+4. write a program to write data sequtially to file
+5. write a program to modify file data
+6. write a program chage the properites of file
+7. write a program close the file
+
+
+linux os does not understand device hardware structure
+linux people implimented files for the device and they name it as device file
+a programmer can write a program to create, open, read, write and close device file
+
+
+ex. :
+ _______   _______   __________   ____________
+| GUN 1 | | GUN 2 | | person 1 | | b.g. music |
+|_______| |_______| |__________| |____________|
+    ^	     ^______      ^_______	^________
+ ___|_______   _____|_____   _____|_____   ______|____
+| process 1 | | process 2 | | process 3 | | process 4 |
+|___________| |___________| |___________| |___________|
+
+
+
+at design stage in order to reduce the complexity of the problem, the problem is divided into smaller parts
+to impliment this tasks process managment is providing[creating] the processes
+
+process managment : 
+1. create preocess
+2. schedule process
+3. execute process
+4. terminate process
+
+
+
+Inter Process Communication :
+1. pipe
+2. FIFO
+3. message queuq
+4. shared memory
+5. semaphore
+6. mutex
+
+linux kernal os provides various communication technqies for the processor to communicate with each other
+
+
+
+network application programming : 
+a process on one machine wants to communicate with process on other machine
+
+ip adress + port adress = socket address
+
+socket requires five parameters : 
+1. protocoal 
+2. source ip addr.
+3. destination addr.
+4. source port addr.
+5. destination port addr.
+
+
+signals : 
+signal is a software interrupts handal by processes
+
+
+
+process syncronization : 
+locking techniques: 
+1. mutex
+2. semaphore
+3. sipn
+
+
+
+sceduler : 
+CFS [complite fair scheduling]
+RR [round robin]
+
+
+dirver : 
+1. driver is a software that taking to the hardware
+2. driver resides into kernal space of RAM
+
+
+
+

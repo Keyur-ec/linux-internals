@@ -1,0 +1,25 @@
+form day 10 file
+ls
+
+gcc -fprofile-arcs -ftest-coverage main.c -o main
+
+ls
+
+// run your code
+
+ls
+
+gcov main.gcda
+
+ls
+
+vim main.c.gcov
+
+// for html
+
+lcov --capture --directory . --output-file main.info
+
+ls
+
+genhtml main.info --output-directory . -o newFile
+

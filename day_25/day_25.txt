@@ -1,0 +1,41 @@
+
+
+struct sockaddr_in{
+	sin_family
+	sin_port
+	struct in_addr sin_addr
+}
+
+bind sys call uses three args
+bind(int sockfd, struct sockaddr* myaddr, int sockaddress)
+
+bind is used by tcp servers after bind we say that server socket is half binded
+
+
+listen takes two arg
+listen(int sockfd, int len)
+
+listen is used by tcp servers which specify number of client connection request going to server
+
+NOTE :
+accept(int socketfd, struct sockaddr* cliaddr, int len)
+is a blocking call that will put server in to wait stat until client make a connection request
+
+accept sys call from the server side is accepting client connecting request and fetch info of first client connected and then create a socket of same type and same family and assign fd to it and the socket is called as client socket or connected socket which is used for data transmission
+
+
+
+connect(sockfd, struct sockaddr* srvaddr, int len)
+typically used by tcp client programs to make connection request to the server
+
+
+
+
+
+bige ndian is used by motorola / power pc cpus
+littll endian is used by intel / amd
+
+
+
+
+

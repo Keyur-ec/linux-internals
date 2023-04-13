@@ -1,0 +1,90 @@
+delivery of the signal
+
+PCB also known as struct task_struct
+
+
+signal table contains 
+1. signal disposition table
+2. signal mask (block signal information)
+3. pending signal information
+
+signal disposition table talks about signal behaviour
+signal disposition table is a table 64 enteries
+signal disposition table maintains info. how to handle each signal
+
+each entery will have either of following:
+SIGDFL (DFL -> default) -> executing default behaviour defined by signal.h (os)
+
+SIGIGN (IGN -> ignore) -> simply ignore
+
+signal handler function (user define function) -> signal hander is a spetial function defined by the user to deal with signal
+
+
+NOTE: for most of the signal default behaviour is to terminate
+
+threre are two signal numberd 9(SIGKILL) and 19(SIGSTOP) can never be ignored
+
+when a program is executing illigal instruction like x/0 and program is doing invalid memory access (executing uninitialized pointer or derefrencing a pointer that already freed up) to stop those application or a process kernal has to terminate this processes by using SIGKILL(9) or SIGSTOP(19) so kernal never ignore this signal
+
+
+
+q.   can a function be invoked without calling from main() ?
+ans: yes, with the help of SDT(signal disposition table) and signal handler
+
+
+installing a signal handler to SDT(signal disposition table) or modifying the SDT(signal disposition table):
+
+there are two function to modify SDT
+1. signal()
+	signal(signal_number, signalhandler)
+	arg 1: for witch we want to modify the behaviour
+	arg 2: is a function executed when signal is generated
+	
+	next step after the installing signalhandler is to execute the application continously
+	
+	only then we can check the behaviour of the signal
+2. sigaction()
+
+
+
+
+struct sigset_t -> deals with a group of signals / multiple signals
+		-> its going to maintain multiple signals information
+
+
+system calls group of signals
+1. sigaction()
+2. sigprocmask()
+
+these two system call allows the programmer to specify a group of signal that are be block for current calling process
+
+3. sigpending()
+pending signal call give info of pending signals for the current process
+
+
+
+sigemptyset(sigset_t* set)
+this above function will sigset to empty set / clear all signals
+
+sigfillset(sigset_t* set)
+this above function will initialized sigset to all signal active
+
+sigaddset(sigset_t* set, sig_num)
+individual signal added to group of signals
+
+sigdelset(sigset_t* set, sig_num)
+deleting individual signal from sigset
+
+sigismember(sigset_t, sig_num)
+to check perticular signal member
+
+
+signal mask is 64 bit variable will talk about group of signals that are actully block for current calling process
+if signum is block, again sending same/block signal to process
+-> delivery of signal to process delayed [pending signal]
+-> untill, signal is removed from blocking state(signal mask)
+
+sigprocmask(cmd, sigset_t* new_set, sigset_t* old_set)
+1. this function is going to change process signal mask
+2. can also used to retrive blocked signal info.
+

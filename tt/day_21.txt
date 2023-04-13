@@ -1,0 +1,104 @@
+counting semaphore whose value is grater than 1 used for protecting global shared resources 
+
+<< spin lock >>
+
+prpperties of a spin lock : 
+1. contecntion very expensive in termas of kernal resources
+2. intrerrupts or isr with integrated with spin locks
+ 
+spin lock uses polling method
+
+1. declare spinlock
+	pthread_spinlock_t my_spin;
+2. initialization
+	pthread_spin_init(&my_spin, PTHREAD_PROCESS_PRIVATE)
+	arg 1: &spin lock variables
+	arg 2: PTHREAD_PROCESS_PRIVATE
+	       PTHREAD_PROCESS_SHREAD
+
+3. pthread_soin_lock(&my_spin)
+4. pthread_spin_unlock(&my_spin)
+5. pthread_spin_destroy(&my_spin)
+
+
+<< mutex(mutual exclution) >>
+mutex is like binary semaphore
+one process or thread can hold one mutex at a time
+process / thread locking mutex, must unlock the mutex
+process / thread can't terminate while holding mutex object
+mutex can't be integrated with isr and interrupt
+NOTE : semaphores are by default not initialized, we have to initialize semaphores
+mutex is by default initialized with lock value 1
+
+< mutex procedure >
+
+
+1. declare mutex variable 
+	pthread_mutex_t my_mutex
+initialize mutex variable -> type : dynamic, static
+
+
+for dynamic init
+	pthread_mutex_init(&my_mutex, &mutex_attr)
+
+NOTE : keep 2nd arg. as NULL
+
+
+for static init
+	pthread_mutex_t my_mutex = PTHREAD_MUTEX_INITIALIZATION
+
+dynamic is more flaxiable because mutex attribute can be chage at run time
+in static mutex attribute are fix for the program
+
+
+3. locking
+	pthread_mutex_lock(&my_mutex) or pthread_mutex_trylock(&my_mutex)
+	
+4. unlock
+	pthread_mutex_unlock(&my_mutex)
+	
+	
+	
+	
+thread attributes talks about joinable or detachable property
+bydefault pthread create is joinable state
+only joinable threads can be joined to main process by using pthread_join() function
+detachable thread cant be to main process join using pthread_join() function
+
+
+for detachable threads resources and the memory are immidiatly removed from kernal space on its own
+perent proceess / thread is not waiting for termination of detachable thread
+
+
+
+two ways to make detachable thread
+1. pthrad_detach()
+2. pthread attribute 
+
+
+
+when pthread_exit() call form main  process so process is wait for thread execution
+this is diifrent behaviour of pthread exit
+
+
+
+<< context switching >>
+
+1. switching of the cpu from one process to ohter process
+2. generally contex switiching occures when kernal transfers the control of cpu from one executing process or thread to 
+   onther process or thread
+3. for this kernal has to save the process context in PCB process (kernal space) [context => process data + cpu register values]
+4. then kernal lodes new process and execute
+5. the process from which cpu uses taken off, will execute when it get next cpu slice time
+6. execution begin from where cpu was taken off (with help of context saved information)
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,122 @@
+<< scheduling policies >>
+1. round robin scheduling
+2. complete fair scheduling
+
+
+round robin scheduling:
+1. used by computer system where each proceess will assigend with equal proportion of cpu slice time in circular oreder
+
+2. each process is allows to use cpu for a given amount of time 
+
+3. if job is not done within given cpu time slice cpu is given to next process in queue for same amount of time
+
+4. all process have same priority
+
+5. it impliments starvation free scheduling 
+
+
+complete fair scheduling(cfs):
+1. linux cfs does not assign cpu slice tme directly to processor
+
+2. insted proportion of cpu slice time depends on a factor called NICE value
+
+NICE value:
+1. increase or decrease weightage of processes with respect of cpu slice time 
+2. NICE value will priorotizing the process
+
+each process = 1/n th cpu slice time, where n is no. of processes
+
+
+
+NICE value	priority	cpu time 100mSec	
+
+-20		highest		88
+1		default		10
+19		lowest		2
+
+even a lowest priority process will get a cpu slice time there for it is called as fair scheduling
+
+taskset by default comes with linux distribution
+taskset is a tool used to set cpu core to perticular processes for execution
+
+
+nice() function used by linux os to change process priority
+
+& symbol that runs the operation in background
+
+
+to run process on perticular cpu core use below commad
+taskset -c 1 ./nice & taskset -c 1 ./nice
+
+to see which process use which cou core use top command in terminal 
+top
+
+top command will provide current process information every second
+
+to see which process use which cou core use below key
+f key
+space bar
+escape
+
+to kill process press k and confirm your process pid and enter two times
+
+to exit from top press q
+
+if we set process nice value to -20 kernal will never give that to our process because it is highest priority
+
+
+
+ret = sched_setschduler(0, SCHED_RR, &sp)
+
+in sched_setschduler()
+arg 1: 0 means seeting ploicy for current process
+arg 2: policy macro like SCHED_RR for round robin
+arg 3: struct sched_param
+
+struct sched_param contains parameter or arguments that are used to change the policy of the process
+
+
+
+<< signals >>
+
+on recving signal cpu has to perform some action
+what action processer has to perform depends on what signal process recived
+
+kill -l command to see available signal in linux
+
+1 to 31 are some traditional signal
+34 to 64 are realtime signal
+
+
+
+diffrent condition in which signals are generated:
+
+1. terminal specified key combintion like ctrl + c or ctrl + z
+
+2. when exeption occures
+	-> a. executing invalid insruction like x/0 
+	-> b. executing invalid address (ex. : pointer pointing to some random address or unintialized pointer)
+-> exeption conditions are stopping the current process execution
+
+3. kernal can also send signal to process
+	-> kernal is sending signal called SIGCHLD signal to perent process
+	-> when perent process recives SIGCHLD signal perent understood child terminated 
+
+4. kill is a command used to send signal to the process
+	-> kill -signal_number pid_of_process
+
+5. using a system call we can send signal to process
+	-> kill(pid_of_process, signal_number)
+
+
+exeption handler is a spetial function that deals with exeptions
+
+
+what exeption handler do?
+1. will find the pid of process that performed illegal instruction execution or invalid address memory execution
+2. then terminate the process by sending signal called SIGKILL
+
+ctrl + c and ctrl + z is SIGINT signal
+
+
+

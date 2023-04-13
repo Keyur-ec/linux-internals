@@ -1,0 +1,150 @@
++++++++++++++++++++++
+|	stack	    |
++++++++++++++++++++++
+|		    |
++++++++++++++++++++++ --- ---> program break point or end of program data segment
+|	heap        |	|
++++++++++++++++++++++	|
+|	bss         |	| --> program data section = data + bss +heap
++++++++++++++++++++++	|	
+|	data        |	|
++++++++++++++++++++++ ---
+|	text        |
++++++++++++++++++++++
+
+
+if we want to modify program break point we have below function
+
+1. void* sbrk(int value)
+-> this function will increase program break point or end addr. of prog. data seg. to new addr. which is increased by given value
+
+-> on success returns start of new addr. and return -1 on failure
+
+
+sbrk(0) will return current peogram end point addr.
+sbrk(18) will increase program end point addr. by 18 bytes
+sbrk(-73) will decrease program end point addr. by 73 bytes
+
+/ NOTE : here 18, -73 is example value you take any value/
+
+
+
+2. int brk(void* end_data_segment)
+-> brk function is used to change the location of prog break point or end addr porg. data seg.
+-> on success returns 0 and on failure return -1
+
+
+why we cant execute program from hard drive?
+1. hard disk is slow compared to RAM
+2. hard disk is devided into block-by-block and RAM is bytr-by-byte 
+3. cpu can understand accessing byte-by-byte 
+4. cpu cant understand block mechenisum
+
+
+
++++++++++++++		+++++++++++++++++		
+|           |		|		|
+|           |		|		|
+| process 1 |	---->	|		|
+|           |		|		|
+|           |		|---------------|
++++++++++++++		|    text p1	|-------+
+			|---------------|	|
++++++++++++++		|		|	|	+++++++++++++++++++++++++		
+|           |		|		|	|	|			|
+|           |		|		|	|	+++++++++++++++++++++++++
+| process 2 |   ---->	|---------------|	+----->	|   text of process 1	|
+|           |		|    bss p2	|----+		+++++++++++++++++++++++++
+|           |		|---------------|    +--------> |   bss of process 2	|
++++++++++++++		|		|		+++++++++++++++++++++++++
+			|		|    +--------> |   stack of procees 3	|
++++++++++++++		|---------------|    |		+++++++++++++++++++++++++
+|           |		|   stack p3	|----+	+----->	|   heap of process 4	|
+|           |		|---------------|	|	+++++++++++++++++++++++++
+| process 3 |	---->	|		|	|	|			|
+|           |		|		|	|	+++++++++++++++++++++++++
+|           |		|		|	|	|			|
++++++++++++++		|		|	|	+++++++++++++++++++++++++
+			|		|	|	
++++++++++++++		|		|	|         [SWAP in hard drive]
+|           |		|---------------|	|
+|           |		|    heap p4	|-------+
+| process 4 |   ---->	|---------------|
+|           |		|		|
+|           |		|		|
++++++++++++++		+++++++++++++++++
+
+  [proesses]		      [RAM]
+
+
+there are two challanges for os
+
+1. os has to keep track which memory seg. of a procees are moved to swap partion in hard disk
+2. os will keep track which memory seg. of process are loaded into which location of RAM
+
+now will have space so we add process 5 now into RAM thanks to SWAP
+
+to solve challange no. 2 we have technique called paging technique
+
+< paging technique >
+1. process memory segments are divided into equal size parts where each part called as page
+2. where each page size isw 4kB
+3. provided by low level mmu
+4. like process divided into equal parts. the physical memory(RAM) is also divided into equal size unit, where each unit is called physical frame or page frame
+5. the of physical frame must be equal to page size
+6. physical frame is also 4kB
+7. physical frames are numberd from 0 till ending depend upon RAM
+
+
+0kB is starting address of 0th physical frame
+4kB is starting address of 1st physical frame
+8kB is starting address of 2nd physical frame
+and so on... 
+
+< page table >
+page table [page frame relation table] is dynamic data structure maintained by os in the PCB of the process that maintains the info of which pages of process are mapped into which physical frames of RAM
+
+
+are the number of pages of are fixed?
+
+solution : 
+no, during process execution the number of pages of a process are varries.
+
+1. when DMA calles are made
+2. when function invokation takes place (stack gets increased)/ when a thread is created (stack gets created) 
+3. when process called mmap() function
+4. when process uses shared memory (pages of a process increses)
+
+
+pages of a multiple proceeses are loded completely into different physical frames of RAM
+
+
+do the pages of multple processes share same physical frame?
+1. when a chiled process created initially uses same physical frames which rae used by perent process
+2. mmap() // when we put 4th argument as MAP_SHARED
+3. shared memory [IPC]
+
+
+
+< virtual address traslation >
+hardware MMU will translate virtual address to physical address by seeing the page table of process
+
+
+
+< memory locking function > 
+
+seceanrio : we dont want os to swap perticualr pages of our process into SWAP partition of hard disk
+
+
+int mlock(address, size)
+-> on success returns 0 and on failure returns -1
+
+when we want to lock complite pages of process address space we use function called as mlockall()
+int mlockall()
+
+
+when heap memory seg is full and prog. requring dynamic mamory allocation the memory can be allocated from stack seg. of the process using alloca() function and free() function is required to free the memory
+
+as the function terminates the dynamic memory allocated also distroyed
+
+int alloca(address)

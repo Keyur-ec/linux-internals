@@ -1,0 +1,209 @@
+to modify SDT
+1. void signal(sig_name, sig_handler)
+
+2. int sigaction(sig_num, struct sigaction* ptr, NULL)
+   -> returns 0 on success, returns -1 on failure
+   -> arg 1: sig_num for which we want to modify the behaviour
+   -> pointer of type struct sigaction
+   -> struct sigaction is predefined in signal.h header
+   
+   
+
+
+   
+<< network >>
+
+computer network:
+set of computer integrated together is called computer network
+
+< WAN > 
+-> covers large geographical area
+-> wan consists of number of interconnected nodes
+-> transmission of data from any device will be routed through this interconnected nodes to specify destination
+-> node can be a any device connected into network like router, switch etc...
+
+
++=====+=========================================================================================================================+
+|     |	circuit switch network						packet switch network					|
++=====+=========================================================================================================================+
+| 1.  |	a dedicated path is established between				PSN following networking protocol, where		|
+|     |	sender and reciver through the nodes				messages are divided into small packets called 		|
+|     |									as network packet					|
++=====+=========================================================================================================================+   
+| 2.  |	the path is connection of sequence of				this packets are transmitted through digital network	|
+|     |	physical link between nodes												|
++=====+=========================================================================================================================+   
+| 3.  |	data transmitted from source point											|
+|     |	routed through physical links to											|
+|     |	destination														|
++=====+=========================================================================================================================+  
+| ex. |	telephone							wifi, ethernet						|
++=====+=========================================================================================================================+
+
+
+
+< LAN >
+-> is a collection of computer n/w devices that are connected together in one phisical location like office, school, home etc...
+-> internal data transfer rate of LAN are faster than WAN
+
+
+internet protocol address
+ip address are used identify a node in the netwok and also used fro communication with nodes
+
+ip version
+
+IPv6
+-> 128 bit hexadecimal address better performance and more features
+-> provides large address space
+
+IPv4
+-> 32 bit address
+
+
+
+
+
+		+=======+			+=======+
+		|host a	|			|host b |
+		|	|			|	|
++=======+	+=======+			+=======+			+=======+
+|	|	    |				    |				|	|
+|router	|=======================================================================|server	|
+|	|			    |				    |		|	|
++=======+			+=======+			+=======+	+=======+
+				|host c	|			|host d	|
+				|	|			|	|
+				+=======+			+=======+
+
+
+
+MAC adress:
+physcially atteched to the devices provided by the manufacturer also called as harware address
+
+
+
+< mac addr. vs ip addr. >
+
+MAC address:
+1. mac address are used to identify device locally
+2. is a 12 digit number 
+3. cant be changed
+4. its a phisycal address 
+
+
+IP address:
+1. ip address are used to identify device globally
+2. is a 32 or 128 bit number
+3. can change at any time
+4 its a logical address
+
+
+NOTE: when a data or packet sent over the network both mac and ip address are used
+
+
+
+< netwok protocol layer >
+-> network protocol layer organised as series of layer
+-> reason for develeping protocols as layer is to reduse the complexity of design
+-> each layer is providing functionality to other layers
+
+
+
+< OSI referance model >	
+		
++=======================+
+|      application	|
++=======================+
+|      presentation	|
++=======================+
+|	session		|
++=======================+
+|	transport	|
++=======================+
+|	network		|
++=======================+
+|	data link	|
++=======================+
+|	physical	|
++=======================+
+
+
+application 	-> application provides interface throuch which we can intract to any application to start data trasmission
+	    	-> all application protocol are present in this layer HTTP, HTTPS, FTP, POP etc...
+	    
+presentation 	-> job is to find in which format data is to be transmitted to the reciver so that reciver can understand the message
+	     	-> it will also provide encryption and decryption for data security
+	     	-> data compression to reduce the size
+	    
+session 	-> it establish the connection between server and client or sender and reciver until reciver recives the data 
+		
+transport	-> uses TCP or UDP [tcp is connection oriented and udp is connection less]
+
+network		-> deviding data into smaller packet this packet is called network packet
+		-> will hold the IP address of source node and destination node
+		-> also responsible for routing operation
+		
+data link	-> will look for error in the data and remove the error and transfer error free data
+		-> it also maintain data flow transfer speed between sender and reciver
+
+physical	-> converting data into bits zero's and one's
+		-> will decide whether data is to be sent through wired or wireless media
+
+
+
+
+
+< socket system call >
+
+-> socket system call supports many n/w communication protocol tftp, tcp, udp, pop, ftp, http, https etc...
+-> socket system call are generic in nature as they support many communication protocol
+-> size is used as key argument in socket system call 
+
+
+
+first step of implimenting client server model application is to create sockets on both sides [server and client side]
+
+socket:
+-> sockets are end addresses or final end point in a communicating programs to which connection is establised
+-> sockets are special types of files
+-> each and every socket have five parameter
+	param 1: protocol
+	param 2: source adddress 32 bit (network byte order)
+	param 3: destination address 32 bit (network byte order)
+	param 4: source port address 16 bit (network byte order)
+	param 5: destination port address 16 bit (network byte order)
+
+
+
+
+network sys call for server:
+1. socket()
+2. bind()
+3. listen()
+4. accept()
+
+-> bind is to assign the server side socket with wellknown ip address and source port number
+-> after bind() sys call server socket has protocol + source ip + server port
+-> server socket side to be half binded
+
+-> accept() waiting for client connection request
+
+
+
+network sys call for client:
+1. socket()
+2. connect()
+
+-> client uses connect() sys call to establish connection with server side socket
+
+
+
+
+
+
+
+
+
+
+
+

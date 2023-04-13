@@ -1,0 +1,101 @@
+<< Inter Process Communication(IPC) >>
+linux os provoide various communication techniques for process communication
+1. pipe
+2. fifo
+3. message queue
+4. shared memory
+5. semaphores
+6. mutex
+
+pipe is communication object that is used to communcation between perent and chiled processes [realted processes]
+
+
+< pipe >
+1. pipe is a file in the memory which has got buffer to send and recive data
+2. pies has two ends one is read end and one is write end
+3. data written on right end of the pipe, data is read in the sasme order from the read end of the pipe
+4. pipe is a serial communication device that permits unidirectional data transfer
+
+from application view to create a pipe, a pipe() systemcall is required
+
+int pipe(int p[2])
+
+1. pipe takes array of two integer array as an argument and returns an int
+2. return 0 on success, returns -1 on failure [-1 when there is no memory]
+3. when we call pipe() sysyem call pipe gets created in kernal space
+
+always p[0] used for read purpose and p[1] is used for write purpose
+
+maximum size of pipe is located at
+cat /proc/sys/fs/pipe-max-size
+
+we can also modify this value as a root user
+
+
+NOTE :
+for noraml file operation read() system call act as a non blocking operation
+in pipes operation read system call may block if there is no data and a process trying read data from pipe 
+
+
+the major limitation of pipe communication that is pipe only used betweent perent and chiled process communication
+
+
+< fifo (named pipes) >
+fifo are used for communication between unrelated processes 
+
+command to create fifo is 'mkfifo filename'
+to see created file 'ls -l filename'
+
+--------------------------------------------------------
+step to create fifo in terminal
+
+open 2 terminal 
+in first terminal type mkfifo myFifo and press enter
+on same terminal type cat > myFifo and press enter
+
+now on other terminal type cat < myFifo and press enter
+
+to remove fifo type rm myFifo and press enter
+--------------------------------------------------------
+
+fifo are register as files in file system with respective names
+
+
+< type of communication with respect to network >
+1. connection oriented
+2. connection less
+
+
+fifo is connection oriented
+
++----+----------------------------------------------------------+---------------------------------------------------------------+
+|    |			      pipe				|			         fifo				|
++----+----------------------------------------------------------+---------------------------------------------------------------+
+| 1. | pipes used for perent and chiled related processes	| used for nrelated process					|
++----+----------------------------------------------------------+---------------------------------------------------------------+
+| 2. | unidirectional						| unidirectional						|
++----+----------------------------------------------------------+---------------------------------------------------------------+
+| 3. | basic io calles	read, write, open			| basic io calles						|
++----+----------------------------------------------------------+---------------------------------------------------------------+
+| 4. | pipes are created in kernal space			| fifo are created as file in file system with name		|
++----+----------------------------------------------------------+---------------------------------------------------------------+
+| 5. | if procees terminates all kernal object is also lost	| if a proccess terminated fifo as a file exeist in file system	|
++----+----------------------------------------------------------+---------------------------------------------------------------+
+| 6. | pipe()							| mkfifo() system call						|
++----+----------------------------------------------------------+---------------------------------------------------------------+
+| 7. | read() sys call is a blocking call			| in fifo both read() and open() are blocking call		|
++----+----------------------------------------------------------+---------------------------------------------------------------+
+
+
+
+1. we need to write two programs one is server program and other on  is client program
+2. we start first server program
+3. once server started, wait/block fro client connection request
+4. once client initiates a connection request to server, server has to accept the request
+5. the client and server is now ready for communication
+
+
+client :
+1. client has to access server fifo object (created by server)
+2. client writing to the server fifo object
+3. once clint writes data to server fifo, server reads / receive data and process the data

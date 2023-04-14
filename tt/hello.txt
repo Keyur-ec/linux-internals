@@ -1,1 +1,2 @@
-hello from linux!
+fd1 = 3
+fd_user = 17

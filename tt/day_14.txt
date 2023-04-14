@@ -1,0 +1,84 @@
+when a thread returns from task function we have got api called as pthread_cancel()
+that terminates a thread
+
+
+thread termination ways
+1. when process terminates, thread also terminates
+2. when thread returns from task function
+3. api pthread_cancel(thread id)
+4. api pthread_exit(void* return value)
+
+
+pthread_cancel() function is a cencellation request to other threads use to terminates other threads of the same process
+
+pthread_cancel() function terminates ehose thread id is mention as an argument
+
+can also terminate calling thraed
+
+pthread_self() -> returns calling thread id
+
+pthread_exit() -> when called it exit from current thread
+
+return value of pthread_cancel() func.
+-1 in failure 
+0 on success
+
+
+
+
+when pthread_join() function is called it takes two argument
+1st wating for perticualr thread id to terminate
+2nd argument collect the exit code of thread
+
+
+maximum number of linux os supports 
+it located at cat /proc/sys/kernel/threads-max
+
+we can change this maximum value of thread as a root user
+
+
+pthread_once() function must be used in combination with once control variable of type pthred_once_t
+pthread_once() used to run thread task only for once
+
+PTHREAD_ONCE_INIT is a constant value defined in pthread.h
+
+
+when pthread_exit() called from main process it is going to wait for execution of all threads 
+
+
+< pthread attribute category >
+1. thread stack managment
+2. thread synchronization
+3. thread scheduling policy and priority
+
+
+
+by default pthread.h provides 8MB stack size to the each thread
+
+we can modify the value of thread stack size from 8MB to either more or less stack size  
+
+
+
+attributes talks about thread behaviour 
+once thread created how this thread should execute
+
+1. declare a variable of type pthread_attr_t
+	pthread_attr_t myattr
+	
+2. initialize the variable using pthread_attr_init(pthread_attr_t* ptr)
+	pthread_attr_init(&myattr)
+
+3. call appropriate attribute function
+
+4. create pthread using our attribute object
+	pthread_create(&tid, &myattr, task_function, arg)
+	
+5. distroy the attribute object finally when task is done
+	pthread_attr_destroy(&myattr)
+	
+
+in this case [in code thread_attr.c]
+if we do not destroy stack attribute two threads are pointing to same stack address, but pthread rule says each thread should have separate stack address 
+
+
+

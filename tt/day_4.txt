@@ -1,0 +1,97 @@
+[below notes is releted only to main.c file program]
+[notes start here]
+
+when working with gdb it is found that the fact variable was unintisialized having garbeg value that causing the unexpected result 
+
+now set fact variable value to "1" and then run using gdb
+
+[notes end here]
+
+
+
+[other notes]
+
+scanf("%d %*d %d", &a, &b, &c); // here %*d means don't read value
+ex. :
+input: 1 2 3
+output: a = 1 b = 3 c = garbag value
+
+
+gdb is not effective when bug or error happen in heap segment so separate class of tools are used for tracing the bugs when they happen in heap section
+
+
+memory profiling tool:
+
+heap profiling tool
+
+
+
+intigrating application with memory profiling library
+electric fence 
+
+gcc -g code.c -o code -lefence
+
+
+most of the time if we observe realtime application debug examples bug heppance to be from user point of view
+
+accedently derefrencing null pointer 
+
+accedently derefrencing uninitsialized null pointer
+
+accedently derefrencing pointer which is already free
+
+writing after at the end of allocated memory
+
+stdlib library allocating more memory than requested so gdb and gcc fail to trace memory violatins
+
+
+
+electric fence
+its a memory debugger or memory profile library
+
+it has its own library but has own implementation of malloc() and calloc()
+
+when programmer links the electric fence with the application will have dominance over stdlib c memory function [malloc() and calloc()]
+
+if memory error occurs electric fence trigger application program crash through segmentation fault
+
+electric fence identify the bugs writing bayond upper boundary region [over run erros]
+
+electric fence identify the bugs writing before memory region [under run erros] 
+
+
+
+segmentation fault
+
+when program is compile and executed memory segments are allocted for our program in RAM 
+
+our program is supposed to access entire memory segments that is allocate that is our program can use text, data seg., bss seg., heap seg., stack   seg. 
+
+if program is try to access region beyond/below that leads to seg fault causing the application to terminate
+
+
+
+
+valgrind : 
+is an standalone debugger used at run time
+
+to identifying errors due to heap memory violations
+
+also used as memory profiling tool
+
+
+provideing debugging symbol to valgrind
+
+if we provide debug symbol to valgrind it shows exect line number where problem occurs
+
+runs without elecric fence and use stdlib c library memrory functions and identifying program errors
+
+
+
+
+when kernal trys to access invalid virtual address into physical memory then it causes seg. fault
+
+kernal maps virtual address to physical address in case program is using invalid address kernal fails to map physical address for invalid addresses
+
+processor raises an error to kernal now kernal looks appropriate program that is making use of invalid address and terminates application or program
+through seg. fault

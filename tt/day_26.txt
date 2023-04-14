@@ -1,0 +1,69 @@
+int recvfrom(sockfd, char* buff, int len, flags, struct sockaddr* addr, int* addrlen)
+
+agr 1: sockfd
+arg 2: ptr to buffer that recive data
+arg 3: len of buffer
+arg 4: flags
+arg 5: addr is a ptr to sockaddr struct from which data is recived
+arg 6: len of (sockaddr) struct
+
+
+
+int sendto(sockfd, char* buff, int len, flags, struct sockaddr* dest, int lendest)
+
+arg 2: contains data to be trasnmitted
+arg 3: lenth of the buffer
+arg 4: flags
+arg 5: ptr points to destnation address
+arg 6: lenth of the destnation address
+
+
+
+
+<< implemantation UDP client and server >>
+
+udp client never forms connection with the server 
+
+client just create socket and send datagram packet to the server
+
+server just create socket and bind socket with well known port addr
+
+as there is no connection from the client side program server need not to call listen and accept sys call
+
+after binding server will wait for packet from client side
+
+client send a packet that contains the sender addr 
+
+once datagram packet is recived by server, server process the data and uses the sender addr to send data to correct client 
+
+
+
+
+<< wireshark >>
+
+is a opensource network protocol analyzer tool
+
+used to capture incoming and outgoing packets in the n/w in real time
+
+this captured info is used for trubleshooting and communication protocol develepment used in s/e development also for packet analysis
+
+the purpose is to what happning around n/w
+
+it also provides detailed info of packets which are in movement around the n/w
+
+it can inspect 100s of packet at a time
+
+used to capture live packets and can exemine the packets later
+
+wireshark tool automatically gets updated to the new protocol released in market
+
+
+
+
+to find mac address in your machine type command in termianl
+cat /sys/class/net/*/address
+
+
+
+
+

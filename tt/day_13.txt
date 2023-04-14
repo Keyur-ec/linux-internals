@@ -1,0 +1,90 @@
+disadvantage of fork() sys call
+
+when fork is called process created kernal has to allocate and initialised lots of resources to maintain a process
+
+
+
+< threads >
+multithreading 
+
+a process creating multiple thread is called multi threading
+
+multi threaded process in multi processor environment
+
+each thread can run separatly a diffrent task on diffrent processor at same time 
+
+defination of thread : a parallal context of execution is called as thread
+
+defination of multithread : multiple parallal context of execution is called as thread
+
+threads are called as light weight processes
+
+creation of threads maintaing threads and distroying threads is far cheaper when compair to maintaining the process in terms of kernal resources
+
+only few resources are allocated when threads is created 
+
+thread resources : 
+
+threads has its own stack and maintans it 
+threads has its own scheduling policy and priority 
+threads has its own registers
+threads has its own signals called as sigblock / sigmask
+threads has its own thread specific data
+
+
+
+< linux os thread model >
+linux has one-to-one thread model
+
+linux threads do not have their own memory segments
+linux threads uses memory segment of perent process
+threads use text, data, bss and heap segment of perent process 
+each and every threads maintains its own stack memory segment
+
+linux is using clone() api to create a thread. after that will make executable and then if we want to run that executable in windows that will not work because windows does not know what is the clone() api
+so for that we use api called as POSIX (Portable Operating System Interface)
+
+
+IEEE standard organization defined set of common api's(sys call) that are implimented accross posix compatability os [ex. : windows and unix os] to provide portable software
+
+
+pthread [posix thread]
+
+data types of pthread: 
+each and every thread is identified by unique thread id, pthread_t that denotes thread id
+pthread_t also called as thread object
+
+when thread created each and every thread has attribute / properties that talks about thread behaviour. how thread is behave once the thread is created
+
+pthread_attr_t also talk about thread attribute / properties
+
+
+< thread creation >
+
+#include<pthread.h>
+
+int pthread_create (pthread_t* ptr,
+	            pthread_attr_t* attr,
+		    void (*start_routine)(void),
+		    void* arg);
+
+
+// void (*start_routine)(void) is a function pointer
+
+pthread_create() on a success return 0 otherwise return error code
+
+error code : 
+
+EAGAIN // creating thread and system do not have enough resoures
+EPERM // creating thread and system do not have required permission
+
+
+pthread_join(threadid ,NULL)
+
+1. joining thread with process
+2. pthread_join() function wait for termination of specified thread
+
+
+
+
+
